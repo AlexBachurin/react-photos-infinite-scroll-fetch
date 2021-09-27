@@ -1,7 +1,29 @@
 import Navbar from "./components/Navbar";
 import { FaSearch } from 'react-icons/fa'
+import { useState, useEffect } from "react";
 
+const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
+const photosUrl = `https://api.unsplash.com/photos/`
+const searchUrl = `https://api.unsplash.com/search/photos`
 function App() {
+
+  const [loading, setLoading] = useState(false)
+
+  const fetchPhotos = async () => {
+    setLoading(true)
+    try {
+      const res = await fetch(`${photosUrl}${clientID}`);
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }
+  useEffect(() => {
+    fetchPhotos()
+
+  }, [])
   return (
     <>
       <Navbar />
