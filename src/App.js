@@ -10,15 +10,20 @@ function App() {
 
   const [loading, setLoading] = useState(false)
   const [photos, setPhotos] = useState([])
-
+  //state for page, we will change then we hit bottom of page
+  const [page, setPage] = useState(1);
   //fetch data
   const fetchPhotos = async () => {
     setLoading(true)
+    //url for page
+    const pageUrl = `&page=${page}`
+    const url = `${photosUrl}${clientID}${pageUrl}`
     try {
-      const res = await fetch(`${photosUrl}${clientID}`);
+      const res = await fetch(url);
       const data = await res.json();
-      console.log(data);
-      setPhotos(data);
+      setPhotos(photos => {
+        return [...photos, ...data]
+      });
     } catch (error) {
       console.log(error)
       setLoading(false)
@@ -27,15 +32,21 @@ function App() {
 
 
   useEffect(() => {
+    console.log('page change fetch');
+    console.log(page)
     fetchPhotos()
-  }, [])
+  }, [page])
 
   //listening for scroll event
   useEffect(() => {
     const event = window.addEventListener('scroll', () => {
       //scroll logic, checking if we reached bottom of the page
-      if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
-        console.log('bigger')
+      //also only fetch if we are not loading data atm
+      if (!loading && (window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+        //then we reached bottom of page, change page to next
+        setPage(page => {
+          return page + 1
+        })
       }
     })
 
@@ -63,6 +74,7 @@ function App() {
             })}
           </div>
         </section>
+        {loading ? <h3 className="loading">Loading...</h3> : null}
       </main>
     </>
   );

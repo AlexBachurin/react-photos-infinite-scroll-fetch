@@ -239,3 +239,7 @@ textarea {
 .photo:hover .photo-info {
   transform: translateY(0);
 }
+
+.loading {
+  text-align: center;
+}
