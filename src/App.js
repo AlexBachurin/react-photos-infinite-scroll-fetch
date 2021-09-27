@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import Navbar from "./components/Navbar";
+import { FaSearch } from 'react-icons/fa'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <main>
+        <section className="search">
+          <form className="search-form">
+            <input type="text" placeholder="search" className="form-input" value />
+            <button type="submit" className="submit-btn">
+              <FaSearch />
+            </button>
+          </form>
+        </section>
+        <section className="photos">
+          <div className="photos-center">
+            <h1>hello</h1>
+            <h1>hello</h1>
+            <h1>hello</h1>
+            <h1>hello</h1>
+            <h1>hello</h1>
+          </div>
+        </section>
+      </main>
+    </>
   );
 }
 
