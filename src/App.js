@@ -10,6 +10,8 @@ function App() {
 
   const [loading, setLoading] = useState(false)
   const [photos, setPhotos] = useState([])
+
+  //fetch data
   const fetchPhotos = async () => {
     setLoading(true)
     try {
@@ -22,10 +24,26 @@ function App() {
       setLoading(false)
     }
   }
+
+
   useEffect(() => {
     fetchPhotos()
-
   }, [])
+
+  //listening for scroll event
+  useEffect(() => {
+    const event = window.addEventListener('scroll', () => {
+      //scroll logic, checking if we reached bottom of the page
+      if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+        console.log('bigger')
+      }
+    })
+
+    return () => {
+      window.removeEventListener('scroll', event)
+    }
+  }, [])
+
   return (
     <>
       <Navbar />
