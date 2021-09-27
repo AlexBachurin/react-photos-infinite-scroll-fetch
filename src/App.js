@@ -55,6 +55,7 @@ function App() {
 
   useEffect(() => {
     fetchPhotos()
+    // eslint-disable-next-line
   }, [page])
 
   //listening for scroll event
@@ -73,6 +74,7 @@ function App() {
     return () => {
       window.removeEventListener('scroll', event)
     }
+    // eslint-disable-next-line
   }, [])
 
   //SEARCH
@@ -86,6 +88,7 @@ function App() {
     e.preventDefault();
     //set page to 1 on submit
     setPage(1)
+    fetchPhotos();
   }
 
   return (
@@ -102,8 +105,8 @@ function App() {
         </section>
         <section className="photos">
           <div className="photos-center">
-            {photos.map(item => {
-              return <Photo key={item.id} {...item} />
+            {photos.map((item, index) => {
+              return <Photo key={index} {...item} />
             })}
           </div>
         </section>
