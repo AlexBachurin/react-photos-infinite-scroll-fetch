@@ -11,7 +11,7 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [photos, setPhotos] = useState([])
   //state for page, we will change then we hit bottom of page
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   //state for searchTerm
   const [term, setTerm] = useState('');
   //fetch data
@@ -46,6 +46,7 @@ function App() {
           return [...photos, ...data]
         }
       });
+      setLoading(false)
     } catch (error) {
       console.log(error)
       setLoading(false)
