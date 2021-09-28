@@ -12,19 +12,21 @@ function App() {
   const [photos, setPhotos] = useState([])
   //state for page, we will change then we hit bottom of page
   const [page, setPage] = useState(1);
-  //state for searchTerm
-  const [term, setTerm] = useState('');
+  //state for searchTerm input
+  const [inputValue, setInputValue] = useState('');
+  //state for value after submit
+  const [searchTerm, setSearchTerm] = useState('');
   //fetch data
   const fetchPhotos = async () => {
     setLoading(true)
     //url for search
-    const termUrl = `&query=${term}`
+    const termUrl = `&query=${searchTerm}`
     //url for page
     const pageUrl = `&page=${page}`
     //main url
     let mainUrl = ``
     //check if we have term, we fetch using search url, else we do normal fetch
-    if (term) {
+    if (searchTerm) {
       mainUrl = `${searchUrl}${clientID}${pageUrl}${termUrl}`
     } else {
       mainUrl = `${photosUrl}${clientID}${pageUrl}`
@@ -36,10 +38,10 @@ function App() {
       setPhotos(photos => {
         //change here aswell bcz we get different data if we using search 
         //also check if we on page 1 then we clear old photos
-        if (term && page === 1) {
+        if (searchTerm && page === 1) {
           return [...data.results]
         }
-        else if (term) {
+        else if (searchTerm) {
           const searchRes = data.results;
           return [...photos, ...searchRes]
         } else {
@@ -81,13 +83,14 @@ function App() {
   //SEARCH
   //change term on input changes
   const handleTerm = (e) => {
-    setTerm(e.target.value)
+    setInputValue(e.target.value)
   }
 
   //
   const handleSearch = (e) => {
     e.preventDefault();
     //set page to 1 on submit
+    setSearchTerm(inputValue)
     setPage(1)
     fetchPhotos();
   }
@@ -98,7 +101,7 @@ function App() {
       <main>
         <section className="search">
           <form className="search-form">
-            <input onChange={handleTerm} type="text" placeholder="search" className="form-input" value={term} />
+            <input onChange={handleTerm} type="text" placeholder="search" className="form-input" value={inputValue} />
             <button onClick={handleSearch} type="submit" className="submit-btn">
               <FaSearch />
             </button>
